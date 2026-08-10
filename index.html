@@ -1,0 +1,272 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>ScamShield AI</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Archivo:wght@600;800&family=Public+Sans:wght@400;500;600&family=IBM+Plex+Mono:wght@500&display=swap" rel="stylesheet">
+<style>
+:root{
+  --ink:#171C22;
+  --slate:#2B333C;
+  --bench:#DDE4E8;
+  --sheet:#F7F8F9;
+  --flag:#C0341C;
+  --marker:#FFD84D;
+  --safe:#1B6B4E;
+  --rule:#B9C4CB;
+  --dim:#5C6873;
+  --display:"Archivo",system-ui,sans-serif;
+  --body:"Public Sans",system-ui,sans-serif;
+  --mono:"IBM Plex Mono",ui-monospace,monospace;
+}
+*{box-sizing:border-box}
+html{-webkit-text-size-adjust:100%}
+body{
+  margin:0;background:var(--bench);color:var(--ink);
+  font:400 16px/1.6 var(--body);
+}
+.shell{max-width:1080px;margin:0 auto;padding:0 28px}
+
+/* ---------- masthead ---------- */
+.masthead{display:flex;align-items:baseline;gap:14px;padding:26px 0 0;flex-wrap:wrap}
+.wordmark{font:800 19px/1 var(--display);letter-spacing:-.02em}
+.eyebrow{font:500 11px/1 var(--mono);letter-spacing:.14em;text-transform:uppercase;color:var(--dim)}
+
+/* ---------- hero ---------- */
+.hero{padding:44px 0 56px;display:grid;grid-template-columns:minmax(0,1fr) minmax(0,1.05fr);gap:56px;align-items:start}
+.hero-lead h1{
+  font:800 clamp(38px,5.6vw,64px)/0.98 var(--display);
+  letter-spacing:-.035em;margin:0 0 22px;
+}
+.hero-lead h1 em{font-style:normal;color:var(--flag)}
+.hero-lead p{font-size:17px;color:var(--slate);margin:0 0 18px;max-width:44ch}
+.hint{
+  display:inline-flex;align-items:center;gap:9px;
+  font:500 13px/1 var(--mono);letter-spacing:.02em;
+  background:var(--ink);color:#fff;padding:12px 15px;border-radius:3px;
+}
+.hint .arrow{color:var(--marker);font-size:15px}
+
+/* ---------- specimen ---------- */
+.specimen{margin:0}
+.specimen-label{
+  font:500 11px/1 var(--mono);letter-spacing:.14em;text-transform:uppercase;
+  color:var(--dim);display:flex;justify-content:space-between;
+  border-bottom:1px solid var(--rule);padding-bottom:9px;margin-bottom:18px;gap:12px;
+}
+.phone{background:var(--sheet);border:1px solid var(--rule);border-radius:4px;padding:16px;box-shadow:0 1px 0 #fff inset}
+.meta{font:500 10.5px/1.5 var(--mono);color:var(--dim);letter-spacing:.05em;margin-bottom:12px}
+.bubble{
+  background:#E7EBEE;border-radius:3px 14px 14px 14px;
+  padding:15px 17px;font-size:15.5px;line-height:1.62;color:var(--slate);
+}
+.mark{
+  border-bottom:2px solid var(--flag);cursor:default;
+  transition:background .16s ease,color .16s ease;
+}
+.bubble sup{font:500 10px/1 var(--mono);color:var(--flag);padding-left:2px}
+.mark.lit{background:var(--marker);color:var(--ink)}
+
+.flags{list-style:none;margin:20px 0 0;padding:0;counter-reset:f}
+.flags li{
+  display:grid;grid-template-columns:66px 1fr;gap:14px;align-items:start;
+  padding:11px 0;border-top:1px dashed var(--rule);font-size:14px;color:var(--slate);
+  cursor:default;transition:color .16s ease;
+}
+.flags li:hover,.flags li.lit{color:var(--ink)}
+.flags li.lit .tag{background:var(--marker);color:var(--ink)}
+.tag{font:500 10.5px/1.5 var(--mono);letter-spacing:.08em;color:var(--flag)}
+.verdict{
+  margin-top:18px;background:var(--ink);color:#fff;padding:13px 16px;border-radius:3px;
+  font-size:14.5px;display:flex;gap:11px;align-items:baseline;
+}
+.verdict b{font:500 11px/1 var(--mono);letter-spacing:.12em;color:var(--marker);text-transform:uppercase;white-space:nowrap}
+
+/* ---------- readout ---------- */
+.readout{
+  border-top:2px solid var(--ink);border-bottom:1px solid var(--rule);
+  display:flex;flex-wrap:wrap;gap:34px;padding:15px 0;
+  font:500 12px/1 var(--mono);letter-spacing:.05em;color:var(--dim);
+}
+.readout b{color:var(--ink);font-weight:500}
+
+/* ---------- sections ---------- */
+section{padding:56px 0}
+h2{font:800 clamp(24px,3.2vw,32px)/1.1 var(--display);letter-spacing:-.028em;margin:0 0 8px}
+.deck{color:var(--dim);margin:0 0 30px;max-width:56ch}
+
+.does{display:grid;grid-template-columns:repeat(auto-fit,minmax(215px,1fr));gap:2px;background:var(--rule)}
+.does div{background:var(--bench);padding:22px 20px 24px}
+.does h3{font:600 15px/1.3 var(--display);letter-spacing:-.01em;margin:0 0 7px}
+.does p{margin:0;font-size:14.2px;color:var(--slate);line-height:1.6}
+.does .n{font:500 10.5px/1 var(--mono);color:var(--flag);letter-spacing:.1em;display:block;margin-bottom:11px}
+
+.prompts{list-style:none;margin:0;padding:0;border-top:1px solid var(--rule)}
+.prompts li{border-bottom:1px solid var(--rule);padding:14px 0;display:flex;gap:16px;align-items:baseline;flex-wrap:wrap}
+.prompts q{
+  font:500 14.5px/1.5 var(--mono);color:var(--ink);quotes:none;
+  background:var(--sheet);border:1px solid var(--rule);padding:6px 10px;border-radius:3px;
+}
+.prompts span{font-size:14px;color:var(--dim)}
+
+.notice{
+  border-left:4px solid var(--flag);background:var(--sheet);
+  padding:20px 22px;font-size:15px;color:var(--slate);
+}
+.notice strong{color:var(--ink)}
+
+.build p{max-width:62ch;color:var(--slate);margin:0 0 14px}
+
+footer{border-top:2px solid var(--ink);padding:22px 0 46px;font:500 11.5px/1.7 var(--mono);letter-spacing:.05em;color:var(--dim);display:flex;justify-content:space-between;gap:16px;flex-wrap:wrap}
+
+@media (max-width:880px){
+  .hero{grid-template-columns:1fr;gap:40px;padding:32px 0 44px}
+  .shell{padding:0 20px}
+  section{padding:44px 0}
+}
+@media (prefers-reduced-motion:reduce){*{transition:none!important;animation:none!important}}
+:focus-visible{outline:3px solid var(--flag);outline-offset:3px}
+
+.origin-warn{display:none;background:var(--ink);color:#C9D2D8;border-bottom:2px solid var(--marker);padding:13px 28px;font-size:13.5px;line-height:1.55}
+.origin-warn code{font:500 12.5px/1 var(--mono);background:rgba(255,255,255,.12);color:#fff;padding:3px 7px;border-radius:3px;white-space:nowrap}
+.origin-warn b{color:var(--marker);font:500 11px/1 var(--mono);letter-spacing:.14em;text-transform:uppercase;display:block;margin-bottom:6px}
+</style>
+</head>
+<body>
+
+<div class="origin-warn" id="originWarn">
+  <b>Local preview notice</b>
+  The chat will not reply here. This page was opened directly from disk, so the address bar reads <code>file://</code>, and Dialogflow refuses requests that have no web origin. Double-click <code>Preview locally.command</code> in this folder instead, or open the page from GitHub Pages. The agent itself is fine, and this notice does not appear on the published site.
+</div>
+
+<div class="shell">
+
+  <header class="masthead">
+    <span class="wordmark">ScamShield&nbsp;AI</span>
+    <span class="eyebrow">Digital safety assistant &middot; Google Dialogflow ES</span>
+  </header>
+
+  <div class="hero">
+    <div class="hero-lead">
+      <h1>Most scams are<br>readable. <em>If you<br>know the marks.</em></h1>
+      <p>This is a real SMS pattern that empties bank accounts in India every day. Four things give it away, and none of them need any technical knowledge to spot.</p>
+      <p>ScamShield AI reads messages, links, callers and QR codes the same way. If money has already gone, it tells you what to do in the hour that still matters.</p>
+      <span class="hint"><span class="arrow">&#9662;</span> Chat opens bottom right</span>
+    </div>
+
+    <figure class="specimen">
+      <figcaption class="specimen-label"><span>Specimen 01 &middot; KYC phishing</span><span>4 flags</span></figcaption>
+      <div class="phone">
+        <div class="meta">SMS &middot; +91 70xxx xxxxx &middot; not in contacts &middot; 11:04</div>
+        <p class="bubble"><span class="mark" data-f="1">Dear Customer</span><sup>1</sup>, your bank account will be <span class="mark" data-f="2">suspended today</span><sup>2</sup> as your KYC is incomplete. <span class="mark" data-f="3">Update immediately</span><sup>3</sup> at <span class="mark" data-f="4">http://sbi-kyc-verify.online</span><sup>4</sup> to avoid deactivation.</p>
+      </div>
+
+      <ol class="flags">
+        <li data-f="1"><span class="tag">FLAG 01</span><span>Your bank knows your name. A real alert would use it.</span></li>
+        <li data-f="2"><span class="tag">FLAG 02</span><span>The deadline exists to stop you checking. Banks give notice in writing.</span></li>
+        <li data-f="3"><span class="tag">FLAG 03</span><span>KYC is done in a branch or in the bank's own app. Never through a link.</span></li>
+        <li data-f="4"><span class="tag">FLAG 04</span><span>Read the domain right to left. The real site here is sbi-kyc-verify.online, which has nothing to do with any bank.</span></li>
+      </ol>
+
+      <p class="verdict"><b>Verdict</b> <span>Phishing. Do not tap. Open your banking app directly, or call the number printed on your own card.</span></p>
+    </figure>
+  </div>
+
+  <div class="readout">
+    <span><b>41</b> intents</span>
+    <span><b>605</b> training phrases</span>
+    <span><b>20</b> entities</span>
+    <span><b>17</b> scam types</span>
+    <span><b>3</b> conversation flows</span>
+    <span><b>0</b> data stored</span>
+  </div>
+
+  <section>
+    <h2>What it does</h2>
+    <p class="deck">Four jobs, in the order a real incident tends to unfold.</p>
+    <div class="does">
+      <div><span class="n">READS</span><h3>A message, link, caller or QR</h3><p>Walks you through the ten marks that appear in almost every scam, then gives a plain verdict rather than a maybe.</p></div>
+      <div><span class="n">EXPLAINS</span><h3>How 17 frauds actually work</h3><p>Digital arrest, task scams, pig butchering, SIM swap. Each one broken into the five stages, so you can see where it can still be stopped.</p></div>
+      <div><span class="n">RESPONDS</span><h3>The first hour after a loss</h3><p>Call 1930, freeze the account, file on cybercrime.gov.in. In that order, because a freeze is only possible while the money is still traceable.</p></div>
+      <div><span class="n">DRILLS</span><h3>A four-question radar test</h3><p>Every question looks plausible and every one is a scam. Recognising a pattern you have seen before is far easier than reasoning under pressure.</p></div>
+    </div>
+  </section>
+
+  <section>
+    <h2>Try these</h2>
+    <p class="deck">Type any of them into the chat. It handles the wording people actually use, not just these exact phrases.</p>
+    <ul class="prompts">
+      <li><q>is this a scam</q><span>Asks where it arrived, then reads it with you</span></li>
+      <li><q>I received a job offer asking for money, is this safe?</q><span>The no-fee rule</span></li>
+      <li><q>should I share my OTP</q><span>The one answer that is never conditional</span></li>
+      <li><q>a man in uniform on video says I cannot disconnect</q><span>Digital arrest</span></li>
+      <li><q>I have already lost money</q><span>Emergency path, two questions then act</span></li>
+      <li><q>start the quiz</q><span>Then answer scam or safe</span></li>
+    </ul>
+  </section>
+
+  <section>
+    <p class="notice"><strong>ScamShield AI will never ask you for an OTP, PIN, card number, password or ID document.</strong> It is a chatbot. It is not a bank, the police, or a government body, and it has no authority to act for you. For financial fraud in India, calling <strong>1930</strong> is the first move, before anything else.</p>
+  </section>
+
+  <section class="build">
+    <h2>How it was built</h2>
+    <p>Dialogflow ES, no webhook. Nothing you type is sent to a server of mine, because there isn't one. The intent classifier runs at a threshold of 0.4 rather than the default 0.3, since 41 intents in one narrow domain will otherwise produce confident wrong answers, and a wrong scam verdict is worse than admitting uncertainty.</p>
+    <p>Fuzzy matching is on for 18 of the 20 entities, because people typing during a fraud make spelling errors. It is deliberately off for yes/no and scam/safe, where an approximate match would be a real bug. Suggestion chips appear on every reply, so someone who cannot phrase the question can still get an answer by tapping.</p>
+  </section>
+
+  <footer>
+    <span>ScamShield AI &middot; CRS Artificial Intelligence &middot; Summative Assessment</span>
+    <span>Helpline 1930 &middot; cybercrime.gov.in</span>
+  </footer>
+
+</div>
+
+<script src="https://www.gstatic.com/dialogflow-console/fast/messenger/bootstrap.js?v=1"></script>
+<df-messenger
+  intent="WELCOME"
+  chat-title="ScamShield AI"
+  agent-id="857731a1-7c86-4bcf-9d45-5ea58d017089"
+  language-code="en">
+</df-messenger>
+
+<style>
+  df-messenger{
+    --df-messenger-bot-message:#2B333C;
+    --df-messenger-button-titlebar-color:#171C22;
+    --df-messenger-button-titlebar-font-color:#FFD84D;
+    --df-messenger-chat-background-color:#DDE4E8;
+    --df-messenger-font-color:#ffffff;
+    --df-messenger-send-icon:#C0341C;
+    --df-messenger-user-message:#5C6873;
+    --df-messenger-input-box-color:#F7F8F9;
+    --df-messenger-input-font-color:#171C22;
+  }
+</style>
+
+<script>
+// Dialogflow blocks requests from file:// pages, so say so rather than failing silently.
+if (location.protocol === 'file:') {
+  document.getElementById('originWarn').style.display = 'block';
+}
+
+// Surface any Dialogflow API error instead of leaving the chat mute.
+document.querySelector('df-messenger').addEventListener('df-messenger-error', function (e) {
+  console.error('Dialogflow error:', e.detail && e.detail.error ? e.detail.error : e.detail);
+});
+
+// Hovering a flag lights the exact phrase it refers to, and the reverse.
+document.querySelectorAll('.flags li, .mark').forEach(function (el) {
+  var id = el.dataset.f;
+  var pair = document.querySelectorAll('[data-f="' + id + '"]');
+  function set(on) { pair.forEach(function (p) { p.classList.toggle('lit', on); }); }
+  el.addEventListener('mouseenter', function () { set(true); });
+  el.addEventListener('mouseleave', function () { set(false); });
+});
+</script>
+
+</body>
+</html>
