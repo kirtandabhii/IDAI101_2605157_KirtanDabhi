@@ -6,7 +6,7 @@ An AI-powered conversational assistant built with Google Dialogflow ES. It helps
 **Course:** Artificial Intelligence: Real-World Applications and Implications
 **Assessment:** Summative Assessment, Task 1, Scenario 1
 **Student:** Kirtan Dabhi
-**Candidate Registration Number:** idl
+**Candidate Registration Number:** 2605167
 **School:** Udgam School for Children
 
 ---
