@@ -303,10 +303,9 @@ GitHub Pages only offers `/ (root)` or `/docs` as the folder, which is why `inde
 ├── Preview locally.command                          double-click to test the page locally
 ├── agent/
 │   └── ScamShield-AI.zip                            importable Dialogflow ES agent
-├── docs/
-│   ├── 01-Problem-Understanding-and-User-Research.md   Step 1
-│   └── 02-Testing-and-Optimization-Log.md              Step 3
-└── screenshots/                                     console and conversation evidence
+└── docs/
+    ├── 01-Problem-Understanding-and-User-Research.md   Step 1
+    └── 02-Testing-and-Optimization-Log.md              Step 3
 ```
 
 ---
